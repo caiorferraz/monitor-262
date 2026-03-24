@@ -17,23 +17,24 @@
 
                     Object.entries(data).forEach(([ip, info]) => {
                         
-                        // LÓGICA DE BUSCA:
-                        // Transformamos o conteúdo do dispositivo em texto
-                        const textoBruto = JSON.stringify(info).toLowerCase();
-                        
-                        // Se a palavra "online" aparecer em qualquer lugar do texto, fica verde
-                        const cor = textoBruto.includes("online") ? 'green' : 'red';
+                        // Pegamos o texto bruto igualzinho o anterior que funcionou
+                        const textoBruto = JSON.stringify(info);
+                        const cor = textoBruto.toLowerCase().includes("online") ? 'green' : 'red';
 
+                        // Lógica "Inquebrável": 
+                        // Se houver qualquer número no texto, ele tenta mostrar. 
+                        // Se não, ele apenas repete o que está no info.
                         htmlColetado += `
                             <div style="margin-bottom: 10px; color: ${cor}; font-family: monospace;">
                                 <strong>Dispositivo:</strong> ${ip} | 
-                                <span>${JSON.stringify(info)}</span>
+                                <span>${textoBruto}</span>
                             </div>
                         `;
                     });
 
                     container.innerHTML = htmlColetado;
-                });
+                })
+                .catch(err => console.log("Aguardando API..."));
         }
 
         atualizar(); 
