@@ -15,12 +15,17 @@
                     const container = document.getElementById('lista-dispositivos');
                     let htmlColetado = '';
 
-                    // Percorre cada dispositivo no JSON
                     Object.entries(data).forEach(([ip, info]) => {
                         
-                        // Cria uma linha individual apenas com o IP e o dado bruto
+                        // LÓGICA DE BUSCA:
+                        // Transformamos o conteúdo do dispositivo em texto
+                        const textoBruto = JSON.stringify(info).toLowerCase();
+                        
+                        // Se a palavra "online" aparecer em qualquer lugar do texto, fica verde
+                        const cor = textoBruto.includes("online") ? 'green' : 'red';
+
                         htmlColetado += `
-                            <div style="margin-bottom: 10px;">
+                            <div style="margin-bottom: 10px; color: ${cor}; font-family: monospace;">
                                 <strong>Dispositivo:</strong> ${ip} | 
                                 <span>${JSON.stringify(info)}</span>
                             </div>
