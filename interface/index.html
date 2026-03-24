@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Monitoramento 262</h1>
+    <pre id="status">Carregando ativos...</pre>
+    <script>
+        function atualizar() {
+        // Pega o IP atual da barra de endereços do navegador automaticamente
+        const ipServidor = window.location.hostname;
+      
+            fetch(`http://${ipServidor}:8000/status`)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('status').innerHTML = JSON.stringify(data, null, 2);
+                });
+        }
+
+        atualizar(); // Executa assim que abre
+        setInterval(atualizar, 1000); // Adiciona a atualização automática a cada 1 segundo
+    </script>
+</body>
+</html>
