@@ -2,21 +2,37 @@
 <html>
 <body>
     <h1>Monitoramento 262</h1>
-    <pre id="status">Carregando ativos...</pre>
+    
+    <div id="lista-dispositivos">Carregando...</div>
+
     <script>
         function atualizar() {
-        // Pega o IP atual da barra de endereços do navegador automaticamente
-        const ipServidor = window.location.hostname;
+            const ipServidor = window.location.hostname;
       
             fetch(`http://${ipServidor}:8000/status`)
                 .then(res => res.json())
                 .then(data => {
-                    document.getElementById('status').innerHTML = JSON.stringify(data, null, 2);
+                    const container = document.getElementById('lista-dispositivos');
+                    let htmlColetado = '';
+
+                    // Percorre cada dispositivo no JSON
+                    Object.entries(data).forEach(([ip, info]) => {
+                        
+                        // Cria uma linha individual apenas com o IP e o dado bruto
+                        htmlColetado += `
+                            <div style="margin-bottom: 10px;">
+                                <strong>Dispositivo:</strong> ${ip} | 
+                                <span>${JSON.stringify(info)}</span>
+                            </div>
+                        `;
+                    });
+
+                    container.innerHTML = htmlColetado;
                 });
         }
 
-        atualizar(); // Executa assim que abre
-        setInterval(atualizar, 1000); // Adiciona a atualização automática a cada 1 segundo
+        atualizar(); 
+        setInterval(atualizar, 1000); 
     </script>
 </body>
 </html>
