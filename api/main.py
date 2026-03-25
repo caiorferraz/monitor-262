@@ -8,7 +8,7 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"])
 
 # Função que executa UM ping de forma assíncrona
 async def pingar(nome, ip):
-    # -c 4 = Enviar 4 pacotes (padrão que você quer)
+    # -c 5 = Enviar 5 pacotes
     # -i 0.2 = Intervalo de 0.2s entre pings (para ser mais rápido que o padrão de 1s)
     comando = ["ping", "-c", "5", "-i", "0.2", ip]
     
