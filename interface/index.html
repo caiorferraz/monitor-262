@@ -1,14 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoramento 262</title>
+    <style>
+        body { background: #121212; color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; }
+        h1 { border-bottom: 2px solid #333; padding-bottom: 10px; font-weight: 300; }
+        
+        #lista-dispositivos { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 15px; 
+            margin-top: 20px;
+        }
+
+        .card {
+            background: #1e1e1e;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #444;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .online { border-left-color: #2ecc71; color: #2ecc71; }
+        .offline { border-left-color: #e74c3c; color: #e74c3c; }
+
+        .ip-header { font-weight: bold; font-family: monospace; font-size: 1.1em; margin-bottom: 5px; display: block; }
+        .detalhes { font-size: 0.85em; color: #aaa; }
+    </style>
+</head>
 <body>
     <h1>Monitoramento 262</h1>
-    
-    <div id="lista-dispositivos">Carregando...</div>
+    <div id="lista-dispositivos">Iniciando varredura...</div>
 
     <script>
         function atualizar() {
             const ipServidor = window.location.hostname;
-      
+            // Porta 8000 onde sua API Python (FastAPI/Flask) está rodando
             fetch(`http://${ipServidor}:8000/status`)
                 .then(res => res.json())
                 .then(data => {
@@ -16,28 +45,27 @@
                     let htmlColetado = '';
 
                     Object.entries(data).forEach(([ip, info]) => {
-                        
-                        // Pegamos o texto bruto igualzinho o anterior que funcionou
-                        const textoBruto = JSON.stringify(info);
-                        const cor = textoBruto.toLowerCase().includes("online") ? 'green' : 'red';
+                        const infoString = JSON.stringify(info).toLowerCase();
+                        const isOnline = infoString.includes("online");
+                        const classeStatus = isOnline ? 'online' : 'offline';
 
-                        // Lógica "Inquebrável": 
-                        // Se houver qualquer número no texto, ele tenta mostrar. 
-                        // Se não, ele apenas repete o que está no info.
                         htmlColetado += `
-                            <div style="margin-bottom: 18px; color: ${cor}; font-family: monospace;">
-                                ${ip} 
+                            <div class="card ${classeStatus}">
+                                <span class="ip-header">${ip}</span>
                             </div>
                         `;
                     });
 
                     container.innerHTML = htmlColetado;
                 })
-                .catch(err => console.log("Aguardando API..."));
+                .catch(err => {
+                    document.getElementById('lista-dispositivos').innerHTML = 
+                        `<div style="color:orange">Tentando reconectar à API em ${ipServidor}...</div>`;
+                });
         }
 
-        atualizar(); 
         setInterval(atualizar, 1000); 
+        atualizar();
     </script>
 </body>
 </html>
