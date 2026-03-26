@@ -6,19 +6,18 @@
     <title>MONITORAMENTO 262</title>
     <style>
         body { background: #121212; color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; }
-        
-        /* Título centralizado e aumentado */
-        h2 { 
-            text-align: center; 
-            font-size: 3em; 
+       
+        h2 {
+            text-align: center;
+            font-size: 3em;
             font-weight: 300;
             margin-bottom: 30px;
         }
-        
-        #lista-dispositivos { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-            gap: 15px; 
+       
+        #lista-dispositivos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
             margin-top: 20px;
         }
 
@@ -34,6 +33,11 @@
         .offline { border-left-color: #e74c3c; color: #e74c3c; }
 
         .ip-header { font-weight: bold; font-family: monospace; font-size: 1.1em; margin-bottom: 5px; display: block; }
+
+        .latencia {
+            font-size: 0.9em;
+            color: #ccc;
+        }
     </style>
 </head>
 <body>
@@ -50,13 +54,15 @@
                     let htmlColetado = '';
 
                     Object.entries(data).forEach(([ip, info]) => {
-                        const infoString = JSON.stringify(info).toLowerCase();
-                        const isOnline = infoString.includes("online");
+                        const isOnline = info.status === "ONLINE";
                         const classeStatus = isOnline ? 'online' : 'offline';
 
                         htmlColetado += `
                             <div class="card ${classeStatus}">
                                 <span class="ip-header">${ip}</span>
+                                <span class="latencia">
+                                    ${info.latencia !== null ? info.latencia + ' ms' : ''}
+                                </span>
                             </div>
                         `;
                     });
@@ -64,12 +70,12 @@
                     container.innerHTML = htmlColetado;
                 })
                 .catch(err => {
-                    document.getElementById('lista-dispositivos').innerHTML = 
+                    document.getElementById('lista-dispositivos').innerHTML =
                         `<div style="color:orange; text-align: center; width: 100%;">Tentando reconectar à API...</div>`;
                 });
         }
 
-        setInterval(atualizar, 3000); 
+        setInterval(atualizar, 3000);
         atualizar();
     </script>
 </body>
