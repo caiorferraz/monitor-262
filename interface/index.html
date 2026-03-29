@@ -32,12 +32,10 @@
         .online { border-left-color: #2ecc71; color: #2ecc71; }
         .offline { border-left-color: #e74c3c; color: #e74c3c; }
 
-        .ip-header { font-weight: bold; font-family: monospace; font-size: 1.1em; margin-bottom: 5px; display: block; }
+        .ip-header { font-weight: bold; font-family: monospace; font-size: 1.5em; margin-bottom: 5px; display: block; }
 
-        .latencia {
-            font-size: 0.9em;
-            color: #ccc;
-        }
+        .latencia { font-size: 0.9em; display: block; }
+        
     </style>
 </head>
 <body>
@@ -60,6 +58,7 @@
                         htmlColetado += `
                             <div class="card ${classeStatus}">
                                 <span class="ip-header">${ip}</span>
+                                <span class="latencia">${info.ip}</span>
                                 <span class="latencia">
                                     ${info.latencia !== null ? info.latencia + ' ms' : ''}
                                 </span>
@@ -75,7 +74,7 @@
                 });
         }
 
-        setInterval(atualizar, 3000);
+        setInterval(atualizar, 6000);
         atualizar();
     </script>
 </body>

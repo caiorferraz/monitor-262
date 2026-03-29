@@ -37,7 +37,10 @@ services:
       - TZ=America/Sao_Paulo
     volumes:
       - ./interface:/usr/share/nginx/html  # "Injeta" seu HTML no servidor pronto
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - api-monitor
     # Limita logs também para o servidor web (Nginx)
     logging:
       driver: "json-file"
