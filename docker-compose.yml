@@ -48,3 +48,29 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+
+  audio-processor:
+    image: luthier-digital-base:latest
+    build: ./afinador/api
+    networks:
+      - audio-net
+    # O Linux precisa de acesso ao áudio, vamos expor a porta do stream
+    ports:
+      - "12345:12345/udp"
+    volumes:
+      - ./processor:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  # O Rosto: Mostra o afinador ultra-preciso
+  audio-ui:
+    image: nginx:alpine
+    networks:
+      - audio-net
+    ports:
+      - "8080:80"
+    volumes:
+      - ./ui:/usr/share/nginx/html
+
+networks:
+  audio-net:
+    driver: bridge
