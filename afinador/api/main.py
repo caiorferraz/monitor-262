@@ -5,8 +5,6 @@ import uvicorn
 
 app = FastAPI()
 
-print(" >>> OFICINA LIGADA: LOGICA ATUALIZADA <<< ")
-
 # Configurações de áudio
 SAMPLE_RATE = 44100
 BUFFER_SIZE = 4096
@@ -59,23 +57,33 @@ def get_nota_e_freq(audio_data):
 @app.websocket("/audio")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
-    print("Zenfone/PC conectado ao processador de áudio!")
+    print("✅ Conexão Ativa: Zenfone/PC pronto para processar áudio.")
     try:
         while True:
-            # Recebe o áudio bruto enviado pelo navegador
+            # Recebe o áudio bruto
             data = await websocket.receive_bytes()
+            
+            # Se o JS enviar um buffer vazio antes de fechar, tratamos aqui
+            if not data:
+                break
+                
             audio_data = np.frombuffer(data, dtype=np.float32)
             
-            # Processa a física do som com filtro RMS
+            # Processa a física do som (sua lógica RMS e FFT)
             nota, freq = get_nota_e_freq(audio_data)
             
-            # Devolve o resultado em tempo real para a tela
+            # Envia resposta
             await websocket.send_json({
                 "nota": nota,
                 "frequencia": freq
             })
+            
     except Exception as e:
-        print(f"Conexão encerrada: {e}")
+        # Quando você sai da aba do Chrome, o JS fecha o socket e cai aqui
+        print(f"ℹ️ Microfone liberado no Cliente (Aba oculta ou fechada). Detalhe: {e}")
+    finally:
+        # Garante que o recurso no servidor seja resetado
+        print("🔌 Aguardando nova ativação do microfone...")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8001)

@@ -16,7 +16,7 @@
 <body>
 
     <div id="overlay" onclick="iniciarAudio()">
-        <h2 style="color: #00e676;">Clique em qualquer lugar para afinar</h2>
+        <h2 style="color: #00e676;">Clique em qualquer lugar para afinar!!!</h2>
         <p>O navegador exige um clique para liberar o microfone.</p>
     </div>
 
@@ -43,7 +43,7 @@
                 });
 
                 // 2. Conecta o WebSocket (Porta 8000 do seu container)
-                socket = new WebSocket(`ws://${window.location.hostname}/ws/audio`);
+                socket = new WebSocket("ws://" + window.location.hostname + "/audio");
 
                 socket.onopen = () => {
                     document.getElementById('status-conexao').innerText = "Sistema Online - Pode tocar!";

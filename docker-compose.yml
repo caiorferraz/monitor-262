@@ -1,11 +1,8 @@
-# ==============================================================================
-# PROJETO: ECOSSISTEMA DE SERVIÇOS CAIO (MONITOR + AFINADOR)
-# ==============================================================================
 services:
-  # O Maestro (Nginx como Proxy Reverso e Servidor Estático)
-  painel-web:
+  nginx-service:
+  # Essa imagem veio da internet
     image: nginx:alpine
-    container_name: nginx-maestro
+    container_name: "nginx-container"
     networks:
       - internal-net
     ports:
@@ -13,35 +10,33 @@ services:
     environment:
       - TZ=America/Sao_Paulo
     volumes:
-      # "Injeta" seu HTML no servidor pronto
+        # "Injeta" seu HTML no servidor pronto
       - ./monitor-262/interface:/usr/share/nginx/html/monitor-262
       - ./afinador/interface:/usr/share/nginx/html/afinador
       # Configuração do Servidor
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - /etc/localtime:/etc/localtime:ro
     depends_on:
-      - api-monitor
-      - audio-processor
-    # Limita logs também para o servidor web (Nginx)
+      - monitor-service
+      - audio-service
+      # Limita logs também para o servidor web (Nginx)
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
   # O Cérebro do Monitoramento
-  api-monitor:
+  monitor-service:
     build: ./monitor-262/api
-    container_name: api-monitor
+    # Construída pela linha acima
+    image: monitor-img:latest
+    container_name: "monitor-container"
     networks:
       - internal-net
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=America/Sao_Paulo
-    ports:
-      - "8000:8000"
     volumes:
       - ./monitor-262/api:/app
-      - /etc/localtime:/etc/localtime:ro
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload --no-access-log
     logging:
       driver: "json-file"
@@ -49,22 +44,20 @@ services:
         max-size: "10m"
         max-file: "3"
   # O Cérebro do Afinador
-  audio-processor:
+  audio-service:
     build: ./afinador/api
-    image: luthier-digital-base:latest
-    container_name: audio-processor
+    image: audio-img:latest
+    container_name: "audio-container"
     networks:
       - internal-net
     environment:
-      - PYTHONUNBUFFERED=1 # Garante que os prints apareçam na hora no log
+      - PYTHONUNBUFFERED=1
       - TZ=America/Sao_Paulo
-    # O Linux precisa de acesso ao áudio, vamos expor a porta do stream
     ports:
       - "12345:12345/udp"
-      - "8001:8001" # Expõe para o Nginx e para testes diretos
+      # Porta 8001 removida (acesso via Nginx)
     volumes:
       - ./afinador/api:/app
-      - /etc/localtime:/etc/localtime:ro
     command: uvicorn main:app --host 0.0.0.0 --port 8001 --reload
 
 networks:
