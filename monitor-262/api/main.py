@@ -26,7 +26,7 @@ async def pingar(nome, ip):
     status = "ONLINE" if processo.returncode == 0 else "OFFLINE"
     tempos = re.findall(r'time=(\d+\.?\d*)', saida)
     
-    # LÓGICA DE ARREDONDAMENTO SOLICITADA
+    # Arredondamento
     if tempos:
         val = float(tempos[0])
         latencia = round(val, 2) if val < 1 else int(round(val))
@@ -37,7 +37,7 @@ async def pingar(nome, ip):
 
 @app.get("/status")
 async def check_network():
-    # Marca o início exato do ciclo
+
     inicio_ciclo = time.time()
 
     ativos = {
