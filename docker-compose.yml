@@ -1,10 +1,6 @@
 services:
   nginx-service:
-<<<<<<< HEAD
   # Imagem da internet
-=======
-  # Essa imagem veio da internet
->>>>>>> apps-commits-antigos/master
     image: nginx:alpine
     container_name: "nginx-container"
     networks:
@@ -14,22 +10,12 @@ services:
     environment:
       - TZ=America/Sao_Paulo
     volumes:
-<<<<<<< HEAD
-        # "Injeta" o HTML no servidor pronto
-      - ./interface:/usr/share/nginx/html/monitor-262/
-=======
         # "Injeta" seu HTML no servidor pronto
-      - ./monitor-262/interface:/usr/share/nginx/html/monitor-262
-      - ./afinador/interface:/usr/share/nginx/html/afinador
->>>>>>> apps-commits-antigos/master
+      - ./interface:/usr/share/nginx/html/monitor-262/
       # Configuração do Servidor
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - monitor-service
-<<<<<<< HEAD
-=======
-      - audio-service
->>>>>>> apps-commits-antigos/master
       # Limita logs também para o servidor web (Nginx)
     logging:
       driver: "json-file"
@@ -38,11 +24,7 @@ services:
         max-file: "3"
   # O Cérebro do Monitoramento
   monitor-service:
-<<<<<<< HEAD
     build: ./api
-=======
-    build: ./monitor-262/api
->>>>>>> apps-commits-antigos/master
     # Construída pela linha acima
     image: monitor-img:latest
     container_name: "monitor-container"
@@ -51,39 +33,15 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=America/Sao_Paulo
-<<<<<<< HEAD
     # 
     volumes:
       - ./api:/app
-=======
-    volumes:
-      - ./monitor-262/api:/app
->>>>>>> apps-commits-antigos/master
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload --no-access-log
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
-<<<<<<< HEAD
-=======
-  # O Cérebro do Afinador
-  audio-service:
-    build: ./afinador/api
-    image: audio-img:latest
-    container_name: "audio-container"
-    networks:
-      - internal-net
-    environment:
-      - PYTHONUNBUFFERED=1
-      - TZ=America/Sao_Paulo
-    ports:
-      - "12345:12345/udp"
-      # Porta 8001 removida (acesso via Nginx)
-    volumes:
-      - ./afinador/api:/app
-    command: uvicorn main:app --host 0.0.0.0 --port 8001 --reload
->>>>>>> apps-commits-antigos/master
 
 networks:
   internal-net:
