@@ -10,7 +10,7 @@ services:
     environment:
       - TZ=America/Sao_Paulo
     volumes:
-        # "Injeta" seu HTML no servidor pronto
+        # "Injeta" o HTML no servidor pronto
       - ./interface:/usr/share/nginx/html/monitor-262/
       # Configuração do Servidor
       - ./nginx.conf:/etc/nginx/conf.d/default.conf

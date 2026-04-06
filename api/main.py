@@ -41,8 +41,8 @@ async def check_network():
     inicio_ciclo = time.time()
 
     ativos = {
-        "DNS CLOUDFLARE": "1.1.1.1",
-        "DNS GOOGLE": "8.8.8.8",
+        "CLOUDFLARE": "1.1.1.1",
+        "GOOGLE": "8.8.8.8",
         "MODEM": "187.3.32.117",
         "ROTEADOR": "192.168.1.1",
         "ACCESS POINT": "192.168.1.3",

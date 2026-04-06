@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MONITORAMENTO 262</title>
+    <title>PING</title>
     <style>
         body { background: #121212; color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; }
-       
+        
         h2 {
             text-align: center;
             font-size: 3em;
             font-weight: 300;
             margin-bottom: 30px;
         }
-       
+        
         #lista-dispositivos {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -21,25 +21,63 @@
             margin-top: 20px;
         }
 
+        .online { 
+            border-left-color: #2ecc71 !important; 
+            color: #2ecc71 !important; 
+        }
+
+        .offline { 
+            border-left-color: #e74c3c !important; 
+            color: #e74c3c !important; 
+        }
+
         .card {
             background: #1e1e1e;
-            padding: 15px;
             border-radius: 8px;
             border-left: 5px solid #444;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            /* TAMANHO FIXO AQUI */
             height: 80px;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
+            flex-direction: row;
+            align-items: center;
+            overflow: hidden; /* Garante que nada saia do card */
         }
 
-        .online { border-left-color: #2ecc71; color: #2ecc71; }
-        .offline { border-left-color: #e74c3c; color: #e74c3c; }
+        /* Metade da Esquerda */
+        .device-info {
+            flex: 1; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;      /* Centraliza horizontalmente na metade */
+            justify-content: center;  /* Centraliza verticalmente */
+            text-align: center;
+        }
 
-        .ip-header { font-weight: bold; font-family: monospace; font-size: 1.5em; margin-bottom: 5px; display: block; }
+        /* Metade da Direita */
+        .device-status-right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;  /* Centraliza o MS na metade dele */
+        }
 
-        .latencia { font-size: 0.9em; display: block; }
+        .device-name { 
+            font-size: 1.4em; /* Reduzi levemente para não quebrar */
+            margin-bottom: 5px; 
+            line-height: 1.2; 
+        }
+
+        .device-ip { 
+            font-size: 1.4em; /* Reduzi para caber melhor */
+            opacity: 0.4; 
+            margin: 0; 
+            line-height: 1.2; 
+        }
+
+        .device-latency { 
+            font-size: 1.5em; 
+            font-weight: bold; 
+        }
         
     </style>
 </head>
@@ -49,25 +87,26 @@
 
     <script>
         function atualizar() {
-            const ipServidor = window.location.hostname;
             fetch(`/status`)
                 .then(res => res.json())
                 .then(data => {
                     const container = document.getElementById('lista-dispositivos');
                     let htmlColetado = '';
 
-                    Object.entries(data).forEach(([ip, info]) => {
-                        // ALTERAÇÃO SOLICITADA: Card fica vermelho se offline OU latência > 900
+                    Object.entries(data).forEach(([nome, info]) => {
                         const isHighLatency = info.latencia !== null && info.latencia > 900;
                         const isOnline = info.status === "ONLINE" && !isHighLatency;
-                        
                         const classeStatus = isOnline ? 'online' : 'offline';
 
                         htmlColetado += `
                             <div class="card ${classeStatus}">
-                                <span class="ip-header">${ip}</span>
-                                <span class="latencia">${info.ip}</span>
-                                ${info.latencia !== null ? `<span class="latencia">${info.latencia} ms</span>` : ''}
+                                <div class="device-info">
+                                    <span class="device-name">${nome}</span>
+                                    <span class="device-ip">${info.ip}</span>
+                                </div>
+                                <div class="device-status-right">
+                                    ${info.latencia !== null ? `<span class="device-latency">${info.latencia} ms</span>` : '<span class="device-latency">---</span>'}
+                                </div>
                             </div>
                         `;
                     });
@@ -82,7 +121,6 @@
 
         setInterval(atualizar, 1200);
         atualizar();
-
     </script>
 </body>
 </html>
