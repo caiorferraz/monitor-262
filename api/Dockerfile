@@ -6,4 +6,5 @@ COPY requirements.txt .
 # 2. Instalamos as bibliotecas (incluindo as novas do banco de dados)
 RUN pip install --no-cache-dir -r requirements.txt
 COPY main.py .
+COPY ips.txt .
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

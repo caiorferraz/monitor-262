@@ -40,24 +40,12 @@ async def check_network():
 
     inicio_ciclo = time.time()
 
-    ativos = {
-        "CLOUDFLARE": "1.1.1.1",
-        "GOOGLE": "8.8.8.8",
-        "MODEM": "187.3.32.117",
-        "ROTEADOR": "192.168.1.1",
-        "ACCESS POINT": "192.168.1.3",
-        "PE00QLAK": "192.168.1.10",        
-        "ZENFONE": "192.168.1.12",
-        "PE00QLAK_eth": "192.168.1.11",
-        "REDMI10": "192.168.1.18",
-        "TV32": "192.168.1.16",
-        "NOTE-LENOVO": "192.168.1.13",
-        "TV65": "192.168.1.17",
-        "NOTE-ASUS": "192.168.1.14",
-        "REDMI13": "192.168.1.20",
-        "NOTE-ASUS_eth": "192.168.1.15",
-        "PLAYSTATION": "192.168.1.19"
-    }
+    ativos = {}
+    with open("ips.txt", "r") as f:
+        for linha in f:
+            if ":" in linha:
+                nome, ip = linha.strip().split(":", 1)
+                ativos[nome.strip().upper()] = ip.strip()
 
     # Dispara todos os pings em paralelo
     tarefas = [pingar(nome, ip) for nome, ip in ativos.items()]
