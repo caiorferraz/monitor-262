@@ -26,9 +26,9 @@ services:
   monitor-service:
     build:
       context: ..
-      dockerfile: api/Dockerfile
+      dockerfile: api/Dockerfile.dev
     # Construída pela linha acima
-    image: monitor-img:latest
+    image: monitor-img:dev
     container_name: "monitor-container"
     networks:
       - internal-net
@@ -37,9 +37,8 @@ services:
       - ../api:/app  
     environment:
       - PYTHONUNBUFFERED=1
-      - TZ=America/Sao_Paulo
-    
-    command: uvicorn main:app --host 0.0.0.0 --port 8000 --no-access-log
+      - TZ=America/Sao_Paulo    
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload --no-access-log
     logging:
       driver: "json-file"
       options:
