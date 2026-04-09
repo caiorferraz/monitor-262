@@ -55,6 +55,6 @@ O sistema utiliza Volumes, permitindo alterações sem "parar a máquina":
 Após iniciar, abra o seu navegador e acesse: http://localhost
 
 -------------------------------------------------------------------------------
-Desenvolvido por: Caio
+Desenvolvido por: Caio Ferraz
 "Verificando a respiração da rede."
 -------------------------------------------------------------------------------
