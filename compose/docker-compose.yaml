@@ -1,6 +1,7 @@
 services:
   nginx-service:
-  # Imagem da internet se der build?
+    # No modo Online: Docker faz pull se não existir.
+    # No modo Offline: Docker usa a imagem do docker load 
     image: nginx:alpine
     container_name: "nginx-container"
     networks:
@@ -24,11 +25,12 @@ services:
         max-file: "3"
   # O Cérebro do Monitoramento
   monitor-service:
+    # Se o usuário der 'up --build', ele usa este bloco:
     build:
       context: ..
       dockerfile: api/Dockerfile
-    # Construída pela linha acima
-    image: monitor-img:dev
+    # Nome da imagem unificado ('latest' para facilitar o load)
+    image: monitor-img:latest
     container_name: "monitor-container"
     networks:
       - internal-net
