@@ -12,9 +12,9 @@ services:
       - TZ=America/Sao_Paulo
     volumes:
       # Injeta o HTML no servidor pronto
-      - ../interface:/usr/share/nginx/html/monitor-262/
+      - ./interface:/usr/share/nginx/html/monitor-262/
       # Configuração do Servidor
-      - ../nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - monitor-service
       # Limita logs também para o servidor web (Nginx)
@@ -27,7 +27,7 @@ services:
   monitor-service:
     # Se o usuário der 'up --build', ele usa este bloco:
     build:
-      context: ..
+      context: .
       dockerfile: api/Dockerfile
     # Nome da imagem unificado ('latest' para facilitar o load)
     image: monitor-img:latest
@@ -36,7 +36,7 @@ services:
       - internal-net
     working_dir: /app
     volumes:
-      - ../api:/app  
+      - ./api:/app  
     environment:
       - PYTHONUNBUFFERED=1
       - TZ=America/Sao_Paulo    

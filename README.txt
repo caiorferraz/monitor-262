@@ -14,7 +14,7 @@ compose/ : Comando de inicialização (docker-compose.yaml)
 Use esta opção se você baixou apenas o código-fonte e tem conexão com a rede.
 
 No terminal, dentro da pasta do projeto, execute:
-docker compose -f compose/docker-compose.yaml up -d --build
+docker compose up -d --build
 
 🟡 OPÇÃO B: CONTINGÊNCIA (Offline / Sem Internet)
 Use esta opção se a Opção A falhar ou se o servidor não tiver acesso à internet.
@@ -25,7 +25,7 @@ Carregue o motor do sistema:
 docker load -i monitor-offline-v2.tar
 
 Inicie o sistema:
-docker compose -f compose/docker-compose.yaml up -d
+docker compose up -d
 
 🛠️ MANUTENÇÃO E AJUSTES (MODO VOLUMES):
 O sistema utiliza Volumes, o que permite alterar o comportamento sem precisar reiniciar tudo:
@@ -35,4 +35,4 @@ Visual: Altere 'index.html' em interface/ e dê F5 no navegador.
 Lógica: Altere e salve 'main.py' em api/. O sistema recarrega sozinho.
 
 Rede: Se alterar o nginx.conf, rode:
-docker compose -f compose/docker-compose.yaml restart nginx-service
+docker compose restart nginx-service

@@ -7,6 +7,7 @@ __pycache__/
 venv/
 .venv/
 env/
+.env/
 
 # Docker e Logs
 *.log
@@ -24,6 +25,3 @@ env/
 .DS_Store
 Thumbs.db
 desktop.ini
-
-compose/interface/  
-compose/nginx.conf/
