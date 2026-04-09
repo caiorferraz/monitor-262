@@ -1,60 +1,38 @@
-============================================================
-MONITOR-262 - GUIA DE INSTALAÇÃO OFFLINE
-============================================================
-
-Este pacote contém tudo o necessário para rodar o sistema
-sem dependência de internet.
+MONITOR-262 - GUIA DE INSTALAÇÃO (V2)
+Este sistema pode ser instalado de duas formas. Tente sempre a Opção A primeiro por ser mais rápida e leve.
 
 ESTRUTURA:
-- monitor-offline-v1.tar  : Motor do sistema (Imagens Docker)
-- compose/                : Comandos de inicialização
-- interface/              : Arquivos do painel (HTML)
-- nginx/                  : Configurações de rede
+api/ : Lógica em Python (Editável)
 
-------------------------------------------------------------
-PASSO A PASSO PARA RODAR (MODO PRODUÇÃO):
-------------------------------------------------------------
+interface/ : Painel visual (Editável)
 
-1. Carregar o "Motor" no Docker:
-   docker load -i monitor-offline-v1.tar
+nginx/ : Configuração de rede
 
-2. Iniciar o sistema:
-   docker compose -f compose/docker-compose-offline-prod.yaml up -d
+compose/ : Comando de inicialização (docker-compose.yaml)
 
-3. Acessar no navegador:
-   http://localhost
+🟢 OPÇÃO A: INSTALAÇÃO PADRÃO (Via Internet)
+Use esta opção se você baixou apenas o código-fonte e tem conexão com a rede.
 
-------------------------------------------------------------
-MANUTENÇÃO:
-- Para atualizar o HTML: basta editar a pasta 'interface'.
-- Para ver se está rodando: docker ps
-- Para parar tudo: docker compose -f compose/docker-compose-offline-prod.yaml down
-============================================================
+No terminal, dentro da pasta do projeto, execute:
+docker compose -f compose/docker-compose.yaml up -d --build
 
-------------------------------------------------------------
-MODO MANUTENÇÃO / DESENVOLVIMENTO (MODO 4):
-------------------------------------------------------------
+🟡 OPÇÃO B: CONTINGÊNCIA (Offline / Sem Internet)
+Use esta opção se a Opção A falhar ou se o servidor não tiver acesso à internet.
 
-Use este modo apenas se precisar alterar o código Python (API) 
-ou as configurações em tempo real.
+Certifique-se de que o arquivo monitor-offline-v2.tar está na raiz.
 
-1. Pare a execução atual (se houver):
-   docker compose -f compose/docker-compose-offline-prod.yaml down
+Carregue o motor do sistema:
+docker load -i monitor-offline-v2.tar
 
-2. Inicie em modo desenvolvimento:
-   docker compose -f compose/docker-compose-offline-dev.yaml up -d
+Inicie o sistema:
+docker compose -f compose/docker-compose.yaml up -d
 
-3. Como funciona:
-   - A pasta 'api/' local será espelhada dentro do container.
-   - Qualquer alteração no arquivo 'main.py' será refletida 
-     automaticamente (hot-reload).
-   - Se precisar forçar uma reconstrução da imagem localmente:
-     docker compose -f compose/docker-compose-offline-dev.yaml up -d --build
+🛠️ MANUTENÇÃO E AJUSTES (MODO VOLUMES):
+O sistema utiliza Volumes, o que permite alterar o comportamento sem precisar reiniciar tudo:
 
-------------------------------------------------------------
-DICA DE OURO (VERSIONAMENTO):
-------------------------------------------------------------
-Se você fizer uma alteração crítica no código dentro da pasta 'api' 
-durante a manutenção no cliente, LEMBRE-SE de copiar esses arquivos 
-de volta para o seu repositório Git oficial ao retornar à base.
-============================================================
+Visual: Altere 'index.html' em interface/ e dê F5 no navegador.
+
+Lógica: Altere e salve 'main.py' em api/. O sistema recarrega sozinho.
+
+Rede: Se alterar o nginx.conf, rode:
+docker compose -f compose/docker-compose.yaml restart nginx-service
