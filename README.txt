@@ -1,5 +1,6 @@
 MONITOR-262 - GUIA DE INSTALAÇÃO (V2)
-Este sistema pode ser instalado de duas formas. Tente sempre a Opção A primeiro por ser mais rápida e leve.
+Este sistema pode ser instalado de duas formas. 
+Tente sempre a Opção A primeiro por ser mais rápida e leve.
 
 ESTRUTURA:
 api/ : Lógica em Python (Editável)
@@ -17,7 +18,8 @@ No terminal, dentro da pasta do projeto, execute:
 docker compose up -d --build
 
 🟡 OPÇÃO B: CONTINGÊNCIA (Offline / Sem Internet)
-Use esta opção se a Opção A falhar ou se o servidor não tiver acesso à internet.
+Use esta opção se a Opção A falhar ou se o servidor 
+não tiver acesso à internet.
 
 Certifique-se de que o arquivo monitor-offline-v2.tar está na raiz.
 
@@ -27,12 +29,24 @@ docker load -i monitor-offline-v2.tar
 Inicie o sistema:
 docker compose up -d
 
+🛠️ CONFIGURAÇÃO DE ALVOS (Seu toque pessoal)
+Antes ou depois de subir o sistema, você define quem o 
+Monitor-262 deve vigiar:
+
+Acesse a pasta api/ e abra o arquivo ips.txt.
+
+Altere a lista de acordo com o contexto e necessidade.
+
+Não precisa reiniciar: O sistema lê o arquivo em tempo real.
+Assim que você salvar, os novos alvos aparecerão no painel.
+
 🛠️ MANUTENÇÃO E AJUSTES (MODO VOLUMES):
-O sistema utiliza Volumes, o que permite alterar o comportamento sem precisar reiniciar tudo:
+O sistema utiliza Volumes, o que permite alterar o comportamento 
+sem precisar reiniciar tudo:
 
-Visual: Altere 'index.html' em interface/ e dê F5 no navegador.
+Visual -> Altere 'index.html' em interface/ e dê F5 no navegador.
 
-Lógica: Altere e salve 'main.py' em api/. O sistema recarrega sozinho.
+Lógica -> Altere e salve 'main.py' em api/. O sistema recarrega sozinho.
 
 Rede: Se alterar o nginx.conf, rode:
 docker compose restart nginx-service
