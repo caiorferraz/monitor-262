@@ -1,6 +1,6 @@
 services:
   nginx-service:
-  # Imagem da internet
+  # Imagem do docker load
     image: nginx:alpine
     container_name: "nginx-container"
     networks:
@@ -24,6 +24,7 @@ services:
         max-file: "3"
   # O Cérebro do Monitoramento
   monitor-service:
+  # Imagem do docker load
     image: monitor-img:latest
     container_name: "monitor-container"
     networks:

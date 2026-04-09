@@ -1,6 +1,6 @@
 services:
   nginx-service:
-  # Imagem da internet
+  # Imagem da internet (não tem docker load)
     image: nginx:alpine
     container_name: "nginx-container"
     networks:
@@ -10,7 +10,7 @@ services:
     environment:
       - TZ=America/Sao_Paulo
     volumes:
-        # "Injeta" o HTML no servidor pronto
+      # "Injeta" o HTML no servidor pronto
       - ../interface:/usr/share/nginx/html/monitor-262/
       # Configuração do Servidor
       - ../nginx/nginx.conf:/etc/nginx/conf.d/default.conf

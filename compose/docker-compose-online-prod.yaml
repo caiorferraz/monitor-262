@@ -1,6 +1,6 @@
 services:
   nginx-service:
-  # Imagem da internet
+  # Imagem da internet (não tem docker load)
     image: nginx:alpine
     container_name: "nginx-container"
     networks:
