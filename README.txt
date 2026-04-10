@@ -56,5 +56,4 @@ Após iniciar, abra o seu navegador e acesse: http://localhost
 
 -------------------------------------------------------------------------------
 Desenvolvido por: Caio Ferraz
-"Verificando a respiração da rede."
 -------------------------------------------------------------------------------
