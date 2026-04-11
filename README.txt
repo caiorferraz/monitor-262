@@ -41,7 +41,7 @@ Você define quem o Monitor-262 deve vigiar:
 1. Acesse a pasta 'api/' e abra o arquivo 'ips.txt'.
 2. Adicione ou altere os IPs conforme sua necessidade.
 3. Não precisa reiniciar: O sistema lê o arquivo em tempo real. 
-   Assim que você salvar, os novos alvos aparecerão no painel (F5).
+   Assim que você salvar, os novos alvos aparecerão no painel.
 
 5. MANUTENÇÃO E AJUSTES (MODO LIVE)
 -----------------------------------
