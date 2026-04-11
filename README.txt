@@ -46,8 +46,8 @@ Você define quem o Monitor-262 deve vigiar:
 5. MANUTENÇÃO E AJUSTES (MODO LIVE)
 -----------------------------------
 O sistema utiliza Volumes, permitindo alterações sem "parar a máquina":
-- Visual: Altere 'index.html' em 'interface/' e dê F5 no navegador.
-- Lógica: Altere 'main.py' em 'api/'. O sistema recarrega sozinho.
+- Visual: Altere e salvge 'index.html' em 'interface/'. Dê F5 no navegador.
+- Lógica: Altere e salve 'main.py' em 'api/'. O sistema recarrega sozinho.
 - Rede: Se alterar o 'nginx.conf', rode: docker compose restart nginx-service
 
 6. ACESSO
