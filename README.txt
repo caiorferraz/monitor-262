@@ -29,9 +29,9 @@ No terminal, dentro da pasta do projeto, execute:
 
 OPÇÃO B: Contingência (Offline / Sem Internet)
 Use esta se a Opção A falhar ou se o servidor estiver isolado. 
-Certifique-se de que o arquivo 'monitor-offline-v2.tar' está na pasta.
+Certifique-se de que o arquivo 'monitor-offline-v2.0.0.tar' está na pasta.
 1. Carregue o motor do sistema:
-   docker load -i monitor-offline-v2.tar
+   docker load -i monitor-offline-v2.0.0.tar
 2. Inicie o sistema:
    docker compose up -d
 
