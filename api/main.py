@@ -1,16 +1,26 @@
 import asyncio
 import re
 import time
-import json
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 
-app = FastAPI()
+# Mantive a variável global, mas agora a rota lerá o arquivo para garantir o tempo real
+ATIVOS = {}
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # O startup agora serve apenas para log ou inicializações fixas
+    print("API Iniciada")
+    yield
+    ATIVOS.clear()
+
+app = FastAPI(lifespan=lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=["*"])
 
 # --- CONFIGURAÇÕES FIXAS --- 
 COUNT = "1"
-TIMEOUT = "0.9" # Se não responder em 900ms, cancela para dar tempo do ciclo
+TIMEOUT = "0.9" # Cancela se não responder em 900ms
 INTERVAL = "0.1"
 
 async def pingar(nome, ip):
@@ -40,15 +50,16 @@ async def check_network():
 
     inicio_ciclo = time.time()
 
-    ativos = {}
+    # LEITURA EM TEMPO REAL: Movida para dentro da rota como solicitado
+    ativos_locais = {}
     with open("ips.txt", "r") as f:
         for linha in f:
             if ":" in linha:
                 nome, ip = linha.strip().split(":", 1)
-                ativos[nome.strip().upper()] = ip.strip()
+                ativos_locais[nome.strip().upper()] = ip.strip()
 
     # Dispara todos os pings em paralelo
-    tarefas = [pingar(nome, ip) for nome, ip in ativos.items()]
+    tarefas = [pingar(nome, ip) for nome, ip in ativos_locais.items()]
     resultados = await asyncio.gather(*tarefas)
     
     dados_finais = {nome: info for nome, info in resultados}
