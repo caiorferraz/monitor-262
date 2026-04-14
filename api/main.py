@@ -20,7 +20,9 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"])
 
 # --- CONFIGURAÇÕES FIXAS --- 
 COUNT = "1"
-TIMEOUT = "0.9" # Cancela se não responder em 900ms
+TIMEOUT = "0.9" 
+# Cancela se não responder em 900ms
+# (tempo alto o suficiente para evitar falsos negativos, mas baixo o bastante para dar folga ao ciclo total de 1 segundo)
 INTERVAL = "0.1"
 
 async def pingar(nome, ip):
