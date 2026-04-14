@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PING</title>
+    <link rel="icon" type="image/x-icon" href="logo.png">
     <style>
         body {
             background: #121212;
@@ -115,7 +116,7 @@
                         let classeStatus = 'offline';
 
                         if (info.status === "ONLINE") {
-                            if (lat !== null && lat > 600) {
+                            if (lat !== null && lat > 800) {
                                 classeStatus = 'offline';
                             } else if (lat !== null && lat > 300) {
                                 classeStatus = 'alerta';
