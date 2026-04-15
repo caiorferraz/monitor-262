@@ -23,6 +23,7 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    restart: unless-stopped
   # O Cérebro do Monitoramento
   monitor-service:
     # Se o usuário der 'up --build', ele usa este bloco:
@@ -36,16 +37,17 @@ services:
       - internal-net
     working_dir: /app
     volumes:
-      - ./api:/app  
+      - ./api:/app
     environment:
       - PYTHONUNBUFFERED=1
-      - TZ=America/Sao_Paulo    
+      - TZ=America/Sao_Paulo
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload --no-access-log
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
+    restart: unless-stopped
 
 networks:
   internal-net:
