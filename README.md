@@ -1,0 +1,69 @@
+# MONITOR-262 - Versão 2.0
+
+## 1. SOBRE O PROJETO
+
+O Monitor-262 é uma ferramenta leve desenvolvida para monitorar a latência da sua rede local ou de serviços externos em tempo real.  
+O monitoramento é realizado por meio de requisições assíncronas (ping com AsyncIO), medindo o tempo de resposta dos alvos configurados e classificando o estado conforme limiares de latência.  
+Ele foi desenhado para ser portátil e indestrutível, rodando totalmente via Docker.
+
+## 2. ESTRUTURA DE PASTAS
+
+/  
+|-- api/                -> Lógica em Python e arquivo de alvos (ips.txt)  
+|-- interface/          -> Painel visual (HTML/JS)  
+|-- nginx/              -> Configurações do servidor de rede  
+|-- docker-compose.yaml -> Comando de inicialização do sistema  
+`-- README.md           -> Este manual de instruções
+
+## 3. COMO INSTALAR
+
+Existem duas formas de colocar o sistema para rodar:
+
+### OPÇÃO A: Instalação Padrão (Via Internet)
+Use esta opção se você tem conexão com a rede para baixar as imagens base.
+No terminal, dentro da pasta do projeto, execute:
+   
+   docker compose up -d --build
+
+### OPÇÃO B: Contingência (Offline / Sem Internet)
+Use esta se a Opção A falhar ou se o servidor estiver isolado. 
+Certifique-se de que o arquivo 'monitor-offline-v2.1.2.tar' está na pasta.
+1. Carregue o motor do sistema:
+   docker load -i monitor-offline-v2.1.2.tar
+2. Inicie o sistema:
+   docker compose up -d
+
+## 4. CONFIGURAÇÃO DE ALVOS (IPS.TXT)
+
+Você define quem o Monitor-262 deve vigiar:
+1. Acesse a pasta 'api/' e abra o arquivo 'ips.txt'.
+2. Adicione ou altere os IPs conforme sua necessidade.
+3. Não precisa reiniciar: assim que você salvar, os novos alvos aparecerão no painel, pois o sistema lê o arquivos em tempo real.
+
+## 5. MANUTENÇÃO E AJUSTES (MODO LIVE)
+
+O sistema utiliza Volumes, permitindo alterações sem "parar a máquina":
+- Visual: Altere e salve 'index.html' em 'interface/'. Dê F5 no navegador.
+- Lógica: Altere e salve 'main.py' em 'api/'. O sistema recarrega sozinho.
+- Rede: Se alterar o 'nginx.conf', rode: docker compose restart nginx-service
+
+## 6. ACESSO
+
+Após iniciar, abra o seu navegador e acesse: http://localhost
+
+## 7. ENDPOINT DE STATUS
+
+O sistema disponibiliza um endpoint interno para verificação de estado:
+
+localhost/status
+
+Retorna informações sobre os alvos monitorados e o estado atual do sistema.
+
+## 8. CLASSIFICAÇÃO DE ESTADO
+
+Verde    -> resposta dentro do tempo esperado  
+Amarelo  -> latência elevada  
+Vermelho -> indisponível ou resposta acima de 900 ms
+
+---
+**Desenvolvido por:** Caio Ferraz
