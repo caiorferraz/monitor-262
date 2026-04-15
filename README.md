@@ -68,13 +68,13 @@ Após iniciar, abra o seu navegador e acesse: http://localhost
 
 O sistema disponibiliza um endpoint interno para verificação de estado:
 
-localhost/status
+http://localhost/status
 
 Retorna informações sobre os alvos monitorados e o estado atual do sistema.
 
 ## 9. CLASSIFICAÇÃO DE ESTADO
 
-Verde    -> até 300 ms 
+Verde    -> até 300 ms  
 Amarelo  -> entre 301 ms e 800 ms  
 Vermelho -> acima de 800 ms ou offline
 
