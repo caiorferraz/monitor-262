@@ -1,4 +1,4 @@
-# MONITOR-262 (v2.1.2)
+# MONITOR-262 (v3.0.0)
 
 <p align="center">
   <img src="./docs/monitor-dashboard-realtime.gif" width="700">
@@ -7,13 +7,16 @@
 ## 1. SOBRE O PROJETO
 
 O Monitor-262 é uma ferramenta leve desenvolvida para monitorar a latência da sua rede local ou de serviços externos em tempo real.  
-O monitoramento é realizado de forma assíncrona utilizando AsyncIO e subprocessos ICMP (ping), medindo o tempo de resposta dos alvos configurados e classificando o estado conforme limiares de latência.  
+
 Ele foi desenhado para ser portátil e indestrutível, rodando totalmente via Docker.
 
-## 2. ARQUITETURA DO SISTEMA
+## 2. ARQUITETURA
 
 O sistema utiliza uma arquitetura de microserviços orquestrada, garantindo que o processamento de rede não bloqueie a interface do usuário.  
-Novas medições são realizadas a cada 1500 ms, permitindo visualização contínua do comportamento da rede sem sobrecarga excessiva.
+
+O monitoramento é realizado de forma assíncrona utilizando AsyncIO e subprocessos ICMP (ping), medindo o tempo de resposta dos alvos configurados e classificando o estado conforme limiares de latência.  
+
+Novas medições são realizadas a cada 1500 ms, permitindo visualização contínua do comportamento da rede sem sobrecarga excessiva.  
 
 ```mermaid
 graph TD
@@ -44,55 +47,33 @@ No terminal, dentro da pasta do projeto, execute:
 
 ### OPÇÃO B: Contingência (Offline / Sem Internet)
 Use esta se a Opção A falhar ou se o servidor estiver isolado. 
-Certifique-se de que o arquivo 'monitor-offline-v2.1.2.tar' está na pasta.
+Certifique-se de que o arquivo 'monitor-offline-v3.0.0.tar' está na pasta.
 1. Carregue o motor do sistema:
-   docker load -i monitor-offline-v2.1.2.tar
+   docker load -i monitor-offline-v3.0.0.tar
 2. Inicie o sistema:
    docker compose up -d
 
-## 5. CONFIGURAÇÃO DE ALVOS (IPS.TXT)
+## 5. MANUTENÇÃO E AJUSTES (MODO LIVE)
 
-Você define quem o Monitor-262 deve vigiar:
-1. Acesse a pasta 'api/' e abra o arquivo 'ips.txt'.
-2. Adicione ou altere os IPs conforme sua necessidade.
-3. Não precisa reiniciar: assim que você salvar, os novos alvos aparecerão no painel, pois o sistema lê o arquivo em tempo real.
+O sistema utiliza Volumes do Docker, permitindo alterações sem "parar a máquina":
+- **CONFIGURAÇÃO DE ALVOS:** edite e salve o 'api/ips.txt'. As alterações são exibidas imediatamente. 
+- **LÓGICA:** edite e salve 'api/main.py'. As alterações são exibidas imediatamente.
+- **VISUAL:** edite e salve 'interface/index.html'. Dê F5 no navegador.
+- **REDE:** edite e salve 'nginx/nginx.conf', rode: docker compose restart nginx-service
 
-## 6. MANUTENÇÃO E AJUSTES (MODO LIVE)
+## 6. ACESSO
 
-O sistema utiliza Volumes, permitindo alterações sem "parar a máquina":
-- Visual: Altere e salve 'index.html' em 'interface/'. Dê F5 no navegador.
-- Lógica: Altere e salve 'main.py' em 'api/'. O sistema recarrega sozinho.
-- Rede: Se alterar o 'nginx.conf', rode: docker compose restart nginx-service
+**Painel visual:** http://localhost  
+(Interface demonstrada no início)  
+🟢 -> até 300 ms  
+🟡 -> entre 301 ms e 800 ms  
+🔴 -> acima de 800 ms ou offline  
 
-## 7. ACESSO
-
-Após iniciar, abra o seu navegador e acesse: http://localhost
-
-## 8. ENDPOINT DE STATUS
-
-O sistema disponibiliza um endpoint interno para verificação de estado:
-
-http://localhost/status
-
-Retorna informações sobre os alvos monitorados e o estado atual do sistema.
-
-## 9. CLASSIFICAÇÃO DE ESTADO
-
-Verde    -> até 300 ms  
-Amarelo  -> entre 301 ms e 800 ms  
-Vermelho -> acima de 800 ms ou offline
-
-## 10. PREVIEW TÉCNICO
-
-### Interface Principal
-Visão estática do painel com múltiplos dispositivos monitorados simultaneamente.
-![Painel de Monitoramento](./docs/monitor-dashboard.png)
-
-### Inspeção via CLI
-O sistema permite auditoria rápida dos dados brutos via endpoint de status.
+**Dados brutos:** http://localhost/status
 ![Status Endpoint](./docs/status-endpoint.png)
 
-### Orquestração e Infraestrutura
+## 7. INFRAESTRUTURA
+
 Ambiente isolado garantindo que o backend (FastAPI) e o frontend (Nginx) rodem de forma independente.
 ![Docker Status](./docs/docker-containers-running.png)
 
