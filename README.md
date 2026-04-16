@@ -1,6 +1,8 @@
 # MONITOR-262 (v2.1.2)
 
-![Demonstração Realtime](./docs/monitor-dashboard-realtime.gif)
+<p align="center">
+  <img src="./docs/monitor-dashboard-realtime.gif" width="700">
+</p>
 
 ## 1. SOBRE O PROJETO
 
