@@ -1,5 +1,7 @@
 # MONITOR-262 (v2.1.2)
 
+![Demonstração Realtime](./docs/monitor-dashboard-realtime.gif)
+
 ## 1. SOBRE O PROJETO
 
 O Monitor-262 é uma ferramenta leve desenvolvida para monitorar a latência da sua rede local ou de serviços externos em tempo real.  
@@ -77,6 +79,20 @@ Retorna informações sobre os alvos monitorados e o estado atual do sistema.
 Verde    -> até 300 ms  
 Amarelo  -> entre 301 ms e 800 ms  
 Vermelho -> acima de 800 ms ou offline
+
+## 10. PREVIEW TÉCNICO
+
+### Interface Principal
+Visão estática do painel com múltiplos dispositivos monitorados simultaneamente.
+![Painel de Monitoramento](./docs/monitor-dashboard.png)
+
+### Inspeção via CLI
+O sistema permite auditoria rápida dos dados brutos via endpoint de status.
+![Status Endpoint](./docs/status-endpoint.png)
+
+### Orquestração e Infraestrutura
+Ambiente isolado garantindo que o backend (FastAPI) e o frontend (Nginx) rodem de forma independente.
+![Docker Status](./docs/docker-containers-running.png)
 
 ---
 **Desenvolvido por:** Caio Ferraz
