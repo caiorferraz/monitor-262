@@ -37,21 +37,54 @@ graph TD
 
 ## 4. COMO INSTALAR
 
-Existem duas formas de colocar o sistema para rodar:
+### Requisito:  
+- Docker Desktop (Windows ou macOS)
+- Docker Engine (Linux)
 
-### OPÇÃO A: Instalação Padrão (Via Internet)
-Use esta opção se você tem conexão com a rede para baixar as imagens base.
-No terminal, dentro da pasta do projeto, execute:
+Após instalar o Docker existem duas formas de colocar o sistema para rodar.
+
+### OPÇÃO A: INSTALAÇÃO PADRÃO
+Use esta opção se você tem conexão para baixar as imagens base.
    
-   docker compose up -d --build
+**Utilizando Git**
 
-### OPÇÃO B: Contingência (Offline / Sem Internet)
-Use esta se a Opção A falhar ou se o servidor estiver isolado. 
-Certifique-se de que o arquivo 'monitor-offline-v3.0.0.tar' está na pasta.
-1. Carregue o motor do sistema:
-   docker load -i monitor-offline-v3.0.0.tar
-2. Inicie o sistema:
-   docker compose up -d
+1. Abra o terminal 
+2. git clone https://github.com/caiorferraz/monitor-262  
+3. cd monitor-262  
+4. docker compose up -d
+
+---
+
+**Baixando o código manualmente**
+
+1. Clique no botão verde *Code*
+2. Clique em *Download ZIP*
+3. Extraia o arquivo .zip
+4. Abra o terminal na pasta extraída
+5. docker compose up -d
+
+### OPÇÃO B: CONTINGÊNCIA
+Use esta opção se o servidor estiver sem acesso à internet ou em redes restritas.  
+
+Preparação (Em uma máquina com internet):
+
+1. Vá até a aba Releases do projeto.
+
+2. Baixe o código fonte (Source code (zip)) e o arquivo monitor-offline-v3.0.0.tar
+
+3. Copie ambos para um pendrive
+
+Instalação (no servidor isolado):
+
+1. Cole os arquivos do pendrive em uma pasta no servidor
+
+2. Extraia o arquivo .zip e certifique-se de deixar o arquivo .tar na raiz da pasta extraída
+
+3. Abra o terminal na pasta extraída
+
+4. docker load -i monitor-offline-v3.0.0.tar
+
+5. docker compose up -d
 
 ## 5. MANUTENÇÃO E AJUSTES (MODO LIVE)
 

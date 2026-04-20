@@ -26,7 +26,6 @@ services:
     restart: unless-stopped
   # O Cérebro do Monitoramento
   monitor-service:
-    # Se o usuário der 'up --build', ele usa este bloco:
     build:
       context: .
       dockerfile: api/Dockerfile
