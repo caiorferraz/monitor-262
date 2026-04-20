@@ -66,7 +66,7 @@ Use esta opção se você tem conexão para baixar as imagens base.
 ### OPÇÃO B: CONTINGÊNCIA
 Use esta opção se o servidor estiver sem acesso à internet ou em redes restritas.  
 
-Preparação (Em uma máquina com internet):
+Preparação (em uma máquina com internet):
 
 1. Vá até a aba Releases do projeto.
 
@@ -76,15 +76,15 @@ Preparação (Em uma máquina com internet):
 
 Instalação (no servidor isolado):
 
-1. Cole os arquivos do pendrive em uma pasta no servidor
+4. Cole os arquivos do pendrive em uma pasta no servidor
 
-2. Extraia o arquivo .zip e certifique-se de deixar o arquivo .tar na raiz da pasta extraída
+5. Extraia o arquivo .zip e certifique-se de deixar o arquivo .tar na raiz da pasta extraída
 
-3. Abra o terminal na pasta extraída
+6. Abra o terminal na pasta extraída
 
-4. docker load -i monitor-offline-v3.0.0.tar
+7. docker load -i monitor-offline-v3.0.0.tar
 
-5. docker compose up -d
+8. docker compose up -d
 
 ## 5. MANUTENÇÃO E AJUSTES (MODO LIVE)
 
