@@ -1,7 +1,7 @@
 services:
   nginx-service:
-    # No modo Online: Docker faz pull se não existir.
-    # No modo Offline: Docker usa a imagem do docker load 
+    # Online (up --build): busca a imagem no Hub caso não exista localmente
+    # Offline (up): utiliza a imagem carregada via docker load
     image: nginx:alpine
     container_name: "nginx-container"
     networks:
@@ -27,6 +27,8 @@ services:
   # O Cérebro do Monitoramento
   # Se o usuário der 'up --build', ele usa este bloco:
   monitor-service:
+    # Online (up --build): constrói a partir do Dockerfile caso não exista localmente
+    # Offline (up): utiliza a imagem carregada via docker load
     build:
       context: .
       dockerfile: api/Dockerfile
