@@ -1,5 +1,5 @@
 # MONITOR-262 (v3.0.0)
-### Veja sua rede "respirando", com 1 comando.
+### Veja sua rede respirando em tempo real, com 1 comando.
 
 <p align="center">
   <img src="./docs/monitor-dashboard-realtime.gif" width="700">
@@ -7,20 +7,22 @@
 
 ## 1. SOBRE O PROJETO
 
-O Monitor-262 é uma ferramenta leve desenvolvida para monitorar a latência da sua rede local ou de serviços externos em tempo real.  
+Sistema leve desenvolvido para permitir a visualização simultânea da latência de múltiplos dispositivos, facilitando a identificação rápida de padrões de comportamento de rede.
 
-Ele foi desenhado para ser portátil e indestrutível, rodando totalmente via Docker.
+Reduz o tempo de diagnóstico em cenários onde ferramentas tradicionais exigem testes manuais sequenciais.
+
+Desenhado para ser fácil de reproduzir em qualquer ambiente, rodando totalmente via Docker.
 
 ## 2. ARQUITETURA
 
 O sistema utiliza uma arquitetura de microserviços orquestrada, garantindo que o processamento de rede não bloqueie a interface do usuário.  
 
-O monitoramento é assíncrono (AsyncIO + ICMP), garantindo alta precisão sem travar o sistema.  
+O monitoramento é assíncrono (AsyncIO + ICMP), garantindo alta precisão sem travar o sistema.
 
 O estado de cada alvo é classificado em tempo real conforme os parâmetros.  
 
 <details>
-<summary>Clique para ver o diagrama de funcionamento</summary>
+<summary><b>Diagrama</b></summary>
 
 ```mermaid
 graph TD
@@ -31,13 +33,11 @@ graph TD
 ```
 </details>
 
-## 3. COMO INSTALAR
+## 3. COMO INSTALAR (2 opções)
 
-### Requisito único:
+Requisito único: **Docker Desktop** (Windows / macOS) | **Docker Engine** (Linux)
 
-- **DOCKER DESKTOP** (Windows / macOS) ou **DOCKER ENGINE** (Linux)
----
-### **OPÇÃO 1: ONLINE**
+### **Opção 1: Online** (download ou git)
   
 #### **download**
 
@@ -58,12 +58,11 @@ cd monitor-262
 docker compose up -d --build
 ```
 
-### **OPÇÃO 2: OFFLINE**
-Use esta opção se o servidor for isolado.  
+### **Opção 2: Offline** (disponibilidade perpétua) 
 
-1. Em uma máquina com internet, acesse **Releases** e baixe:  
+1. Acesse **Releases** e baixe:
 **Source code (zip)** e **monitor-offline-v3.0.0.tar**
-2. Copie ambos para o servidor via pen drive
+2. Copie ambos para a máquina offline via pen drive
 3. Extraia o **.zip**, deixe o **.tar** na raiz e acesse a pasta via terminal 
 4. Execute: 
 ```bash
@@ -73,16 +72,28 @@ docker compose up -d
 
 ## 4. ACESSO
 
-### **Painel visual:** http://localhost  
+### **Frontend:** http://localhost  
 
 🟢 -> até 300 ms  
 🟡 -> entre 301 ms e 800 ms  
 🔴 -> acima de 800 ms ou offline  
 
-### **Dados brutos:** http://localhost/status  
-![Status Endpoint](./docs/status-endpoint.png)
+### **Backend:** http://localhost/status  
 
-## 5. MANUTENÇÃO E AJUSTES (TUDO EM TEMPO REAL)
+<details>
+<summary><b>Ver</b></summary>
+
+![Status Endpoint](./docs/status-endpoint.png)
+</details>  
+
+### **Cada serviço no seu container**
+<details>
+<summary><b>Ver</b></summary>
+
+![Docker Status](./docs/docker-containers-running.png)
+</details>
+
+## 5. MANUTENÇÃO E AJUSTES (hot reload)
 
 - **CONFIGURAÇÃO DE ALVOS:** edite e salve o api/**ips.txt**. Alterações exibidas imediatamente. 
 - **LÓGICA:** edite e salve api/**main.py**. Alterações exibidas imediatamente.
@@ -101,11 +112,5 @@ docker compose restart nginx-service
 |-- docker-compose.yaml -> Comando de inicialização do sistema  
 `-- README.md           -> Este manual de instruções
 
-## 7. INFRAESTRUTURA
-
-Backend e Frontend rodando de forma independente.
-
-![Docker Status](./docs/docker-containers-running.png)
-
 ---
-**Desenvolvido por:** Caio Ferraz
+#### **Desenvolvido por:** Caio Ferraz
