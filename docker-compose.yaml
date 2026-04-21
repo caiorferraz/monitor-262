@@ -25,6 +25,7 @@ services:
         max-file: "3"
     restart: unless-stopped
   # O Cérebro do Monitoramento
+  # Se o usuário der 'up --build', ele usa este bloco:
   monitor-service:
     build:
       context: .
