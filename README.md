@@ -37,62 +37,57 @@ graph TD
 
 ## 4. COMO INSTALAR
 
-### Requisito:  
-- Docker Desktop (Windows ou macOS)
-- Docker Engine (Linux)
+Requisito único -> **DOCKER**
 
-Após instalar o Docker existem duas formas de colocar o sistema para rodar.
+- **Docker Desktop** (Windows ou macOS) ou **Docker Engine** (Linux)
 
-### OPÇÃO A: INSTALAÇÃO PADRÃO
-Use esta opção se você tem conexão para baixar as imagens base.
-   
-**Utilizando Git**
+### **OPÇÃO 1: ONLINE**
+  
+### **download**
 
-1. Abra o terminal 
-2. git clone https://github.com/caiorferraz/monitor-262  
-3. cd monitor-262  
-4. docker compose up -d
-
+1. Botão verde **Code** > **Download ZIP** 
+2. Extraia o **.zip** e acesse a pasta via terminal
+3. Execute: 
+```bash
+docker compose up -d --build
+```
 ---
 
-**Baixando o código manualmente**
+### **git**
 
-1. Clique no botão verde *Code*
-2. Clique em *Download ZIP*
-3. Extraia o arquivo .zip
-4. Abra o terminal na pasta extraída
-5. docker compose up -d
+1. Abra o terminal 
+2. Execute:  
+```bash
+git clone https://github.com/caiorferraz/monitor-262
+cd monitor-262
+docker compose up -d --build
+```
 
-### OPÇÃO B: CONTINGÊNCIA
-Use esta opção se o servidor estiver sem acesso à internet ou em redes restritas.  
+### **OPÇÃO 2: OFFLINE**
+Use esta opção se o servidor for isolado.  
 
-Preparação (em uma máquina com internet):
+1. Em uma máquina com internet, acesse **Releases** e baixe:  
+**Source code (zip)** e **monitor-offline-v3.0.0.tar**
 
-1. Vá até a aba Releases do projeto.
+2. Copie ambos para o servidor via pendrive
 
-2. Baixe o código fonte (Source code (zip)) e o arquivo monitor-offline-v3.0.0.tar
+3. Extraia o **.zip**, deixe o **.tar** na raiz e acesse a pasta via terminal 
 
-3. Copie ambos para um pendrive
-
-Instalação (no servidor isolado):
-
-4. Cole os arquivos do pendrive em uma pasta no servidor
-
-5. Extraia o arquivo .zip e certifique-se de deixar o arquivo .tar na raiz da pasta extraída
-
-6. Abra o terminal na pasta extraída
-
-7. docker load -i monitor-offline-v3.0.0.tar
-
-8. docker compose up -d
+4. Execute: 
+```bash
+docker load -i monitor-offline-v3.0.0.tar
+```
+```bash
+docker compose up -d
+```
 
 ## 5. MANUTENÇÃO E AJUSTES (MODO LIVE)
 
 O sistema utiliza Volumes do Docker, permitindo alterações sem "parar a máquina":
-- **CONFIGURAÇÃO DE ALVOS:** edite e salve o 'api/ips.txt'. As alterações são exibidas imediatamente. 
-- **LÓGICA:** edite e salve 'api/main.py'. As alterações são exibidas imediatamente.
-- **VISUAL:** edite e salve 'interface/index.html'. Dê F5 no navegador.
-- **REDE:** edite e salve 'nginx/nginx.conf', rode: docker compose restart nginx-service
+- **CONFIGURAÇÃO DE ALVOS:** edite e salve o **api/ips.txt**. As alterações são exibidas imediatamente. 
+- **LÓGICA:** edite e salve **api/main.py**. As alterações são exibidas imediatamente.
+- **VISUAL:** edite e salve **interface/index.html**. Dê F5 no navegador.
+- **REDE:** edite e salve **nginx/nginx.conf**, rode: docker compose restart nginx-service
 
 ## 6. ACESSO
 
@@ -102,7 +97,7 @@ O sistema utiliza Volumes do Docker, permitindo alterações sem "parar a máqui
 🟡 -> entre 301 ms e 800 ms  
 🔴 -> acima de 800 ms ou offline  
 
-**Dados brutos:** http://localhost/status
+**Dados brutos:** http://localhost/status  
 ![Status Endpoint](./docs/status-endpoint.png)
 
 ## 7. INFRAESTRUTURA
