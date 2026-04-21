@@ -1,4 +1,5 @@
 # MONITOR-262 (v3.0.0)
+### Veja sua rede "respirando", com 1 comando.
 
 <p align="center">
   <img src="./docs/monitor-dashboard-realtime.gif" width="700">
@@ -14,9 +15,12 @@ Ele foi desenhado para ser portátil e indestrutível, rodando totalmente via Do
 
 O sistema utiliza uma arquitetura de microserviços orquestrada, garantindo que o processamento de rede não bloqueie a interface do usuário.  
 
-O monitoramento é realizado de forma assíncrona utilizando AsyncIO e subprocessos ICMP (ping), medindo o tempo de resposta dos alvos configurados e classificando o estado conforme limiares de latência.  
+O monitoramento é assíncrono (AsyncIO + ICMP), garantindo alta precisão sem travar o sistema.  
 
-Novas medições são realizadas a cada 1500 ms, permitindo visualização contínua do comportamento da rede sem sobrecarga excessiva.  
+O estado de cada alvo é classificado em tempo real conforme os parâmetros.  
+
+<details>
+<summary>Clique para ver o diagrama de funcionamento</summary>
 
 ```mermaid
 graph TD
@@ -25,25 +29,17 @@ graph TD
     API -->|AsyncIO Subprocess| Engine[Async Ping Engine - ICMP]
     Engine -->|Rede| Alvos[Dispositivos / IPs externos]
 ```
+</details>
 
-## 3. ESTRUTURA DE PASTAS
-
-/  
-|-- api/                -> Lógica em Python e arquivo de alvos (ips.txt)  
-|-- interface/          -> Painel visual (HTML/JS)  
-|-- nginx/              -> Configurações do servidor de rede  
-|-- docker-compose.yaml -> Comando de inicialização do sistema  
-`-- README.md           -> Este manual de instruções
-
-## 4. COMO INSTALAR
+## 3. COMO INSTALAR
 
 ### Requisito único:
 
 - **DOCKER DESKTOP** (Windows / macOS) ou **DOCKER ENGINE** (Linux)
-
+---
 ### **OPÇÃO 1: ONLINE**
   
-### **download**
+#### **download**
 
 1. Botão verde **Code** > **Download ZIP** 
 2. Extraia o **.zip** e acesse a pasta via terminal
@@ -51,9 +47,8 @@ graph TD
 ```bash
 docker compose up -d --build
 ```
----
 
-### **git**
+#### **git**
 
 1. Abra o terminal 
 2. Execute:  
@@ -76,7 +71,7 @@ docker load -i monitor-offline-v3.0.0.tar
 docker compose up -d
 ```
 
-## 5. ACESSO
+## 4. ACESSO
 
 ### **Painel visual:** http://localhost  
 
@@ -87,7 +82,7 @@ docker compose up -d
 ### **Dados brutos:** http://localhost/status  
 ![Status Endpoint](./docs/status-endpoint.png)
 
-## 6. MANUTENÇÃO E AJUSTES (TUDO EM TEMPO REAL)
+## 5. MANUTENÇÃO E AJUSTES (TUDO EM TEMPO REAL)
 
 - **CONFIGURAÇÃO DE ALVOS:** edite e salve o api/**ips.txt**. Alterações exibidas imediatamente. 
 - **LÓGICA:** edite e salve api/**main.py**. Alterações exibidas imediatamente.
@@ -96,6 +91,15 @@ docker compose up -d
 ```bash
 docker compose restart nginx-service
 ```
+
+## 6. ESTRUTURA DE PASTAS
+
+/  
+|-- api/                -> Lógica em Python e arquivo de alvos (ips.txt)  
+|-- interface/          -> Painel visual (HTML/JS)  
+|-- nginx/              -> Configurações do servidor de rede  
+|-- docker-compose.yaml -> Comando de inicialização do sistema  
+`-- README.md           -> Este manual de instruções
 
 ## 7. INFRAESTRUTURA
 
