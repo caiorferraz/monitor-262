@@ -76,33 +76,35 @@ Use esta opção se o servidor for isolado.
 4. Execute: 
 ```bash
 docker load -i monitor-offline-v3.0.0.tar
-```
-```bash
 docker compose up -d
 ```
 
 ## 5. MANUTENÇÃO E AJUSTES (MODO LIVE)
 
 O sistema utiliza Volumes do Docker, permitindo alterações sem "parar a máquina":
-- **CONFIGURAÇÃO DE ALVOS:** edite e salve o **api/ips.txt**. As alterações são exibidas imediatamente. 
-- **LÓGICA:** edite e salve **api/main.py**. As alterações são exibidas imediatamente.
-- **VISUAL:** edite e salve **interface/index.html**. Dê F5 no navegador.
-- **REDE:** edite e salve **nginx/nginx.conf**, rode: docker compose restart nginx-service
+- **CONFIGURAÇÃO DE ALVOS:** edite e salve o api/**ips.txt**. Alterações exibidas imediatamente. 
+- **LÓGICA:** edite e salve api/**main.py**. Alterações exibidas imediatamente.
+- **VISUAL:** edite e salve interface/**index.html**. F5 no navegador para ver as alterações.
+- **REDE:** edite e salve nginx/**nginx.conf**. Execute: 
+```bash
+docker compose restart nginx-service
+```
 
 ## 6. ACESSO
 
-**Painel visual:** http://localhost  
+### **Painel visual:** http://localhost  
 (Interface demonstrada no início)  
 🟢 -> até 300 ms  
 🟡 -> entre 301 ms e 800 ms  
 🔴 -> acima de 800 ms ou offline  
 
-**Dados brutos:** http://localhost/status  
+### **Dados brutos:** http://localhost/status  
 ![Status Endpoint](./docs/status-endpoint.png)
 
 ## 7. INFRAESTRUTURA
 
 Ambiente isolado garantindo que o backend (FastAPI) e o frontend (Nginx) rodem de forma independente.
+
 ![Docker Status](./docs/docker-containers-running.png)
 
 ---
