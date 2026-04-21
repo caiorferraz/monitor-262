@@ -1,5 +1,5 @@
 # MONITOR-262 (v3.0.0)
-### Veja sua rede respirando em tempo real, com 1 comando.
+### Veja sua rede respirando, com 1 comando.
 
 <p align="center">
   <img src="./docs/monitor-dashboard-realtime.gif" width="700">
@@ -39,7 +39,7 @@ Requisito único: **Docker Desktop** (Windows / macOS) | **Docker Engine** (Linu
 
 ### **Opção 1: Online** (download ou git)
   
-#### **download**
+**download**
 
 1. Botão verde **Code** > **Download ZIP** 
 2. Extraia o **.zip** e acesse a pasta via terminal
@@ -48,7 +48,7 @@ Requisito único: **Docker Desktop** (Windows / macOS) | **Docker Engine** (Linu
 docker compose up -d --build
 ```
 
-#### **git**
+**git**
 
 1. Abra o terminal 
 2. Execute:  
