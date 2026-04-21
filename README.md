@@ -37,9 +37,9 @@ graph TD
 
 ## 4. COMO INSTALAR
 
-Requisito único -> **DOCKER**
+### Requisito único:
 
-- **Docker Desktop** (Windows ou macOS) ou **Docker Engine** (Linux)
+- **DOCKER DESKTOP** (Windows / macOS) ou **DOCKER ENGINE** (Linux)
 
 ### **OPÇÃO 1: ONLINE**
   
@@ -68,20 +68,27 @@ Use esta opção se o servidor for isolado.
 
 1. Em uma máquina com internet, acesse **Releases** e baixe:  
 **Source code (zip)** e **monitor-offline-v3.0.0.tar**
-
-2. Copie ambos para o servidor via pendrive
-
+2. Copie ambos para o servidor via pen drive
 3. Extraia o **.zip**, deixe o **.tar** na raiz e acesse a pasta via terminal 
-
 4. Execute: 
 ```bash
 docker load -i monitor-offline-v3.0.0.tar
 docker compose up -d
 ```
 
-## 5. MANUTENÇÃO E AJUSTES (MODO LIVE)
+## 5. ACESSO
 
-O sistema utiliza Volumes do Docker, permitindo alterações sem "parar a máquina":
+### **Painel visual:** http://localhost  
+
+🟢 -> até 300 ms  
+🟡 -> entre 301 ms e 800 ms  
+🔴 -> acima de 800 ms ou offline  
+
+### **Dados brutos:** http://localhost/status  
+![Status Endpoint](./docs/status-endpoint.png)
+
+## 6. MANUTENÇÃO E AJUSTES (TUDO EM TEMPO REAL)
+
 - **CONFIGURAÇÃO DE ALVOS:** edite e salve o api/**ips.txt**. Alterações exibidas imediatamente. 
 - **LÓGICA:** edite e salve api/**main.py**. Alterações exibidas imediatamente.
 - **VISUAL:** edite e salve interface/**index.html**. F5 no navegador para ver as alterações.
@@ -90,20 +97,9 @@ O sistema utiliza Volumes do Docker, permitindo alterações sem "parar a máqui
 docker compose restart nginx-service
 ```
 
-## 6. ACESSO
-
-### **Painel visual:** http://localhost  
-(Interface demonstrada no início)  
-🟢 -> até 300 ms  
-🟡 -> entre 301 ms e 800 ms  
-🔴 -> acima de 800 ms ou offline  
-
-### **Dados brutos:** http://localhost/status  
-![Status Endpoint](./docs/status-endpoint.png)
-
 ## 7. INFRAESTRUTURA
 
-Ambiente isolado garantindo que o backend (FastAPI) e o frontend (Nginx) rodem de forma independente.
+Backend e Frontend rodando de forma independente.
 
 ![Docker Status](./docs/docker-containers-running.png)
 
