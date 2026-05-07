@@ -19,11 +19,11 @@ app = FastAPI(lifespan=lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=["*"])
 
 # --- CONFIGURAÇÕES FIXAS --- 
-COUNT = "1"
+# Cancela se não responder em 900ms (tempo alto o suficiente 
+# para evitar falsos negativos, mas baixo o bastante
+# para dar folga ao ciclo de 1 segundo)
 TIMEOUT = "0.9" 
-# Cancela se não responder em 900ms
-# (tempo alto o suficiente para evitar falsos negativos, mas baixo o bastante para dar folga ao ciclo de 1 segundo)
-INTERVAL = "0.1"
+COUNT = "1"
 
 async def pingar(nome, ip):
     comando = ["ping", "-c", COUNT, "-W", TIMEOUT, ip]
@@ -52,7 +52,8 @@ async def check_network():
 
     inicio_ciclo = time.time()
 
-    # LEITURA EM TEMPO REAL: Movida para dentro da rota como solicitado
+    # LEITURA EM TEMPO REAL: Movida para dentro da rota
+    # para garantir que cada chamada leia o estado atual do arquivo
     ativos_locais = {}
     with open("ips.txt", "r") as f:
         for linha in f:
@@ -69,7 +70,7 @@ async def check_network():
     # Calcula quanto tempo o processamento levou (ex: 0.1s ou 0.8s)
     tempo_gasto = time.time() - inicio_ciclo
     
-    # O SEGREDO: Calcula quanto falta para completar 1.0 segundo
+    # O SEGREDO: Calcula quanto falta para completar 1 segundo
     tempo_de_espera = max(0, 1.0 - tempo_gasto)
 
     # Segura a resposta até completar o 1 segundo cravado
