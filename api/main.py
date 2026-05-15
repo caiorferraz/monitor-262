@@ -3,6 +3,7 @@ import re
 import time
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import HTTPException
 from contextlib import asynccontextmanager
 
 # Mantive a variável global, mas agora a rota lerá o arquivo para garantir o tempo real
@@ -55,11 +56,16 @@ async def check_network():
     # LEITURA EM TEMPO REAL: Movida para dentro da rota
     # para garantir que cada chamada leia o estado atual do arquivo
     ativos_locais = {}
-    with open("ips.txt", "r") as f:
-        for linha in f:
-            if ":" in linha:
-                nome, ip = linha.strip().split(":", 1)
-                ativos_locais[nome.strip().upper()] = ip.strip()
+    try:
+        with open("ips.txt", "r") as f:
+            for linha in f:                
+                if ":" in linha:
+                    nome, ip = linha.strip().split(":", 1)
+                    ativos_locais[nome.strip().upper()] = ip.strip()
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Arquivo ips.txt não encontrado.")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Falha ao ler ips.txt: {e}")
 
     # Dispara todos os pings em paralelo
     tarefas = [pingar(nome, ip) for nome, ip in ativos_locais.items()]
