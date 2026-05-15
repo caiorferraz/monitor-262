@@ -58,7 +58,11 @@ async def check_network():
     ativos_locais = {}
     try:
         with open("ips.txt", "r") as f:
-            for linha in f:                
+            for linha in f:     
+                linha = linha.strip()
+                # Ignora linhas vazias ou comentadas com #
+                if not linha or linha.startswith("#"):
+                    continue           
                 if ":" in linha:
                     nome, ip = linha.strip().split(":", 1)
                     ativos_locais[nome.strip().upper()] = ip.strip()

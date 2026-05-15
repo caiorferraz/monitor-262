@@ -111,7 +111,7 @@
                 .then(data => {
                     const container = document.getElementById('lista-dispositivos');
 
-                    // Se veio erro no corpo mesmo com 200 (não é o caso do HTTPException, mas mantemos)
+                    // Se veio erro no corpo mesmo com 200 (não é o caso do HTTPException, mas pode ser de outras falhas)
                     if (data.error || data.detail) {
                         container.innerHTML = `
                     <div style="color:red; text-align:center; width:100%;">
@@ -136,16 +136,16 @@
                         }
 
                         htmlColetado += `
-                    <div class="card ${classeStatus}">
-                        <div class="device-info">
-                            <span class="device-name">${nome}</span>
-                            <span class="device-ip">${info.ip}</span>
+                        <div class="card ${classeStatus}">
+                            <div class="device-info">
+                                <span class="device-name">${nome}</span>
+                                <span class="device-ip">${info.ip}</span>
+                            </div>
+                            <div class="device-status-right">
+                                ${info.latencia !== null ? `<span class="device-latency">${info.latencia} ms</span>` : '<span class="device-latency">---</span>'}
+                            </div>
                         </div>
-                        <div class="device-status-right">
-                            ${info.latencia !== null ? `<span class="device-latency">${info.latencia} ms</span>` : '<span class="device-latency">---</span>'}
-                        </div>
-                    </div>
-                `;
+                    `;
                     });
 
                     container.innerHTML = htmlColetado;
