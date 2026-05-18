@@ -1,7 +1,7 @@
 services:
   nginx-service:
     # Online (up --build): busca a imagem no Hub caso não exista localmente
-    # Offline (up): utiliza a imagem carregada via docker load
+    # Offline (up): utiliza a imagem carregada (docker load)
     image: nginx:alpine
     container_name: "nginx-container"
     networks:
@@ -17,22 +17,20 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - monitor-service
-      # Limita logs também para o servidor web (Nginx)
+      # Limita logs 
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
     restart: unless-stopped
-  # O Cérebro do Monitoramento
-  # Se o usuário der 'up --build', ele usa este bloco:
+
   monitor-service:
     # Online (up --build): constrói a partir do Dockerfile caso não exista localmente
-    # Offline (up): utiliza a imagem carregada via docker load
+    # Offline (up): utiliza a imagem carregada (docker load)
     build:
       context: .
       dockerfile: api/Dockerfile
-    # Nome da imagem unificado ('latest' para facilitar o load)
     image: monitor-img:latest
     container_name: "monitor-container"
     networks:
