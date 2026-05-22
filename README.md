@@ -1,4 +1,4 @@
-# MONITOR-262 (v3.0.0)
+# MONITOR-262
 ### Veja sua rede respirando, com 1 comando.
 
 <p align="center">
