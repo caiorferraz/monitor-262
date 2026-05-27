@@ -83,7 +83,7 @@
 
         .device-ip {
             font-size: 1.3em;
-            opacity: 0.4;
+            opacity: 0.5;
             margin: 0;
             line-height: 1.2;
         }
@@ -126,9 +126,7 @@
                         let classeStatus = 'offline';
 
                         if (info.status === "ONLINE") {
-                            if (lat !== null && lat > 800) {
-                                classeStatus = 'offline';
-                            } else if (lat !== null && lat > 300) {
+                            if (lat !== null && lat > 300) {
                                 classeStatus = 'alerta';
                             } else {
                                 classeStatus = 'online';
