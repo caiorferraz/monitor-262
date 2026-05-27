@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import HTTPException
 from contextlib import asynccontextmanager
 
-# Mantive a variável global, mas agora a rota lerá o arquivo para garantir o tempo real
+# dict para armazenar os ativos lidos, mas agora é atualizado a cada chamada
 ATIVOS = {}
 
 @asynccontextmanager
@@ -19,9 +19,8 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=["*"])
 
-# --- CONFIGURAÇÕES FIXAS --- 
-# Cancela se não responder em 900ms (tempo alto o suficiente 
-# para evitar falsos negativos, mas baixo o bastante
+# Cancela se não responder em 900ms (alto o suficiente 
+# para evitar falsos negativos e baixo o bastante
 # para dar folga ao ciclo de 1 segundo)
 TIMEOUT = "0.9" 
 COUNT = "1"
@@ -65,7 +64,7 @@ async def check_network():
                     continue           
                 if ":" in linha:
                     nome, ip = linha.strip().split(":", 1)
-                    ativos_locais[nome.strip().upper()] = ip.strip()
+                    ativos_locais[nome.strip()] = ip.strip()
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="Arquivo ips.txt não encontrado.")
     except Exception as e:
