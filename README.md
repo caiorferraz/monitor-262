@@ -37,8 +37,9 @@ graph TD
 
 Requisito único: **Docker Desktop** (Windows / macOS) | **Docker Engine** (Linux)
 
-### **Opção 1: Online** (download ou git)
-  
+### **Opção 1: Online**
+Instalação padrão via clone do repositório. Requer conexão com a internet para realizar docker pull da imagem do Nginx e o build local (Dockerfile). 
+
 **download**
 
 1. Botão verde **Code** > **Download ZIP** 
@@ -58,10 +59,11 @@ cd monitor-262
 docker compose up -d --build
 ```
 
-### **Opção 2: Offline** (disponibilidade perpétua) 
+### **Opção 2: Offline** 
+Instalação local sem dependências externas. Garante o funcionamento vitalício do sistema independente de nuvem ou internet, bastando a presença do Docker para rodar as imagens arquivadas.
 
-1. Acesse **Releases** e baixe:
-**Source code (zip)** e **monitor-offline-v3.0.0.tar**
+1. Em **Releases**, baixe o
+**Source code** e o arquivo **.tar**
 2. Copie ambos para a máquina offline via pen drive
 3. Extraia o **.zip**, deixe o **.tar** na raiz e acesse a pasta via terminal 
 4. Execute: 
