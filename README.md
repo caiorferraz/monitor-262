@@ -75,8 +75,8 @@ docker compose up -d
 ### **Frontend:** http://localhost  
 
 🟢 -> até 300 ms  
-🟡 -> entre 301 ms e 800 ms  
-🔴 -> acima de 800 ms ou offline  
+🟡 -> entre 301 ms e 900 ms  
+🔴 -> acima de 900 ms ou offline  
 
 ### **Backend:** http://localhost/status  
 
