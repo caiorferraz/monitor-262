@@ -38,16 +38,7 @@ graph TD
 Requisito único: **Docker Desktop** (Windows / macOS) | **Docker Engine** (Linux)
 
 ### **Opção 1: Online**
-Instalação padrão via clone do repositório. Requer conexão com a internet para realizar docker pull da imagem do Nginx e o build local (Dockerfile). 
-
-**download**
-
-1. Botão verde **Code** > **Download ZIP** 
-2. Extraia o **.zip** e acesse a pasta via terminal
-3. Execute: 
-```bash
-docker compose up -d --build
-```
+Instalação padrão realizada a partir do clone ou download do repositório. O Docker utilizará a conexão para baixar a imagem oficial do Nginx e instalar as dependências em tempo real.
 
 **git**
 
@@ -59,8 +50,17 @@ cd monitor-262
 docker compose up -d --build
 ```
 
+**download**
+
+1. Botão verde **Code** > **Download ZIP** 
+2. Extraia o **.zip** e acesse a pasta via terminal
+3. Execute: 
+```bash
+docker compose up -d --build
+```
+
 ### **Opção 2: Offline** 
-Instalação local sem dependências externas. Garante o funcionamento vitalício do sistema independente de nuvem ou internet, bastando a presença do Docker para rodar as imagens arquivadas.
+Instalação local com as imagens pré-carregadas e sem dependências externas. Garante a autonomia perpétua do sistema, rodando em ambientes totalmente isolados e sem internet.
 
 1. Em **Releases**, baixe o
 **Source code** e o arquivo **.tar**
