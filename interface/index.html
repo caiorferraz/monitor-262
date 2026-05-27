@@ -126,7 +126,7 @@
                         let classeStatus = 'offline';
 
                         if (info.status === "ONLINE") {
-                            if (lat !== null && lat > 300) {
+                            if (lat !== null && lat >= 300) {
                                 classeStatus = 'alerta';
                             } else {
                                 classeStatus = 'online';

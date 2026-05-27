@@ -15,11 +15,11 @@ Desenhado para ser fácil de reproduzir em qualquer ambiente, rodando totalmente
 
 ## 2. ARQUITETURA
 
-O sistema utiliza uma arquitetura de microserviços orquestrada, garantindo que o processamento de rede não bloqueie a interface do usuário.  
+Utiliza uma arquitetura de microserviços orquestrada, garantindo que o processamento de rede não bloqueie a interface do usuário.  
 
 O monitoramento é assíncrono (AsyncIO + ICMP), garantindo alta precisão sem travar o sistema.
 
-O estado de cada alvo é classificado em tempo real conforme os parâmetros.  
+Cada alvo é classificado em tempo real conforme os parâmetros.  
 
 <details>
 <summary><b>Diagrama</b></summary>
@@ -27,7 +27,7 @@ O estado de cada alvo é classificado em tempo real conforme os parâmetros.
 ```mermaid
 graph TD
     User((Usuário/Browser)) -->|Porta 80| Nginx[Servidor Nginx]
-    Nginx -->|Proxy Reverso| API[FastAPI Backend]
+    Nginx -->|Proxy Reverso| API[FastAPI]
     API -->|AsyncIO Subprocess| Engine[Async Ping Engine - ICMP]
     Engine -->|Rede| Alvos[Dispositivos / IPs externos]
 ```
@@ -38,12 +38,11 @@ graph TD
 Requisito único: **Docker Desktop** (Windows / macOS) | **Docker Engine** (Linux)
 
 ### **Opção 1: Online**
-Instalação padrão realizada a partir do clone ou download do repositório. O Docker utilizará a conexão para baixar a imagem oficial do Nginx e instalar as dependências em tempo real.
+A partir do clone ou download do repositório. O Docker utilizará a conexão para baixar a imagem oficial do Nginx e instalar as dependências.
 
 **git**
 
-1. Abra o terminal 
-2. Execute:  
+1. Abra o terminal e execute:  
 ```bash
 git clone https://github.com/caiorferraz/monitor-262
 cd monitor-262
@@ -60,7 +59,7 @@ docker compose up -d --build
 ```
 
 ### **Opção 2: Offline** 
-Instalação local com as imagens pré-carregadas e sem dependências externas. Garante a autonomia perpétua do sistema, rodando em ambientes totalmente isolados e sem internet.
+Usa as imagens pré-carregadas e não tem dependências. Garante a autonomia perpétua do sistema, rodando em ambientes totalmente isolados e sem internet.
 
 1. Em **Releases**, baixe o
 **Source code** e o arquivo **.tar**
@@ -68,7 +67,7 @@ Instalação local com as imagens pré-carregadas e sem dependências externas. 
 3. Extraia o **.zip**, deixe o **.tar** na raiz e acesse a pasta via terminal 
 4. Execute: 
 ```bash
-docker load -i monitor-offline-v3.0.0.tar
+docker load -i monitor-vX.x.x.tar
 docker compose up -d
 ```
 
@@ -76,9 +75,9 @@ docker compose up -d
 
 ### **Frontend:** http://localhost  
 
-🟢 -> até 300 ms  
-🟡 -> entre 301 ms e 900 ms  
-🔴 -> acima de 900 ms ou offline  
+🟢 -> até 299 ms  
+🟡 -> entre 300 ms e 899 ms  
+🔴 -> 900 ms ou mais / offline  
 
 ### **Backend:** http://localhost/status  
 
@@ -97,22 +96,18 @@ docker compose up -d
 
 ## 5. MANUTENÇÃO E AJUSTES (hot reload)
 
-- **CONFIGURAÇÃO DE ALVOS:** edite e salve o api/**ips.txt**. Alterações exibidas imediatamente. 
-- **LÓGICA:** edite e salve api/**main.py**. Alterações exibidas imediatamente.
-- **VISUAL:** edite e salve interface/**index.html**. F5 no navegador para ver as alterações.
-- **REDE:** edite e salve nginx/**nginx.conf**. Execute: 
-```bash
-docker compose restart nginx-service
-```
+- **CONFIGURAÇÃO DE ALVOS:** Edite api/**ips.txt** (aplicado imediatamente). 
+- **LÓGICA:** Edite api/**main.py** (aplicado imediatamente).
+- **VISUAL:** Edite interface/**index.html** (F5 no navegador).
 
 ## 6. ESTRUTURA DE PASTAS
 
-/  
-|-- api/                -> Lógica em Python e arquivo de alvos (ips.txt)  
-|-- interface/          -> Painel visual (HTML/JS)  
-|-- nginx/              -> Configurações do servidor de rede  
-|-- docker-compose.yaml -> Comando de inicialização do sistema  
-`-- README.md           -> Este manual de instruções
-
+```text
+├── api/                # Backend  
+├── interface/          # Frontend  
+├── nginx/              # Servidor de rede  
+├── docker-compose.yaml # Inicialização  
+└── README.md           # Este manual
+```
 ---
 #### **Desenvolvido por:** Caio Ferraz
