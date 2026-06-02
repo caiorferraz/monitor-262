@@ -15,9 +15,9 @@ Desenhado para ser fácil de reproduzir em qualquer ambiente, rodando totalmente
 
 ## 2. ARQUITETURA
 
-Utiliza uma arquitetura de microserviços orquestrada, garantindo que o processamento de rede não bloqueie a interface do usuário.  
+Utiliza uma arquitetura modular orquestrada em containers, garantindo que o processamento de rede não bloqueie a interface do usuário.  
 
-O monitoramento é assíncrono (AsyncIO + ICMP), garantindo alta precisão sem travar o sistema.
+O monitoramento é assíncrono (AsyncIO + ICMP), garantindo precisão sem travar o sistema.
 
 Cada alvo é classificado em tempo real conforme os parâmetros.  
 
